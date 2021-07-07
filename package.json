@@ -1,30 +1,28 @@
 {
   "name": "team-profile-generator",
   "version": "1.0.0",
-  "description": "Unit 10 homework",
-  "main": "app.js",
+  "description": "app to create team profile generator ",
+  "main": "index.js",
   "directories": {
-    "lib": "lib",
-    "test": "test"
+    "lib": "lib"
   },
   "scripts": {
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RyanEllingson/Team-Profile-Generator.git"
+    "url": "git+https://github.com/nicolewallace09/team-profile-generator.git"
   },
-  "author": "",
-  "license": "MIT",
+  "author": "Nicole Wallace",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RyanEllingson/Team-Profile-Generator/issues"
+    "url": "https://github.com/nicolewallace09/team-profile-generator/issues"
   },
-  "homepage": "https://github.com/RyanEllingson/Team-Profile-Generator#readme",
+  "homepage": "https://github.com/nicolewallace09/team-profile-generator#readme",
+  "devDependencies": {
+    "jest": "^26.0.1"
+  },
   "dependencies": {
-    "fa": "^1.0.1",
-    "fs": "^0.0.1-security",
-    "inquirer": "^7.3.3",
-    "jest": "^24.9.0",
-    "requirer": "^0.0.4"
+    "inquirer": "^7.1.0"
   }
 }

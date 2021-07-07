@@ -1,14 +1,18 @@
+// link to generate HTML
+const generateHTML = require("./src/generateHTML");
+
 // team profiles
+const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
-// node modules
+//  modules
 const fs = require("fs");
 const inquirer = require("inquirer");
 
-// array
-const Array = [];
+//  array to append team members to
+const teamArray = [];
 
 // start of manager prompts
 const addManager = () => {
@@ -22,6 +26,7 @@ const addManager = () => {
           if (nameInput) {
             return true;
           } else {
+            console.log("Please enter the manager's name!");
             return false;
           }
         },
@@ -32,9 +37,10 @@ const addManager = () => {
         message: "Please enter the manager's ID.",
         validate: (nameInput) => {
           if (isNaN(nameInput)) {
-            return true;
-          } else {
+            console.log("Please enter the manager's ID!");
             return false;
+          } else {
+            return true;
           }
         },
       },
@@ -47,6 +53,7 @@ const addManager = () => {
           if (valid) {
             return true;
           } else {
+            console.log("Please enter an email!");
             return false;
           }
         },
@@ -57,7 +64,7 @@ const addManager = () => {
         message: "Please enter the manager's office number",
         validate: (nameInput) => {
           if (isNaN(nameInput)) {
-            console.log("Please enter an office number!");
+            console.log("Please enter an office number");
             return false;
           } else {
             return true;
@@ -69,15 +76,14 @@ const addManager = () => {
       const { name, id, email, officeNumber } = managerInput;
       const manager = new Manager(name, id, email, officeNumber);
 
-      Array.push(manager);
+      teamArray.push(manager);
       console.log(manager);
     });
 };
 
 const addEmployee = () => {
   console.log(`
-    adding an employee
-    
+  employee has been added!
     `);
 
   return inquirer
@@ -86,7 +92,7 @@ const addEmployee = () => {
         type: "list",
         name: "role",
         message: "Please choose your employee's role",
-        choices: ["Engineer", "Intern"],
+        choices: ["Engineer", "Intern", "Manager"],
       },
       {
         type: "input",
@@ -162,8 +168,18 @@ const addEmployee = () => {
       },
     ])
     .then((employeeData) => {
-      let { name, id, email, role, github, school, confirmAddEmployee } =
-        employeeData;
+      // data for employee types
+
+      let {
+        name,
+        id,
+        email,
+        role,
+        github,
+        school,
+        officeNumber,
+        confirmAddEmployee,
+      } = employeeData;
       let employee;
 
       if (role === "Engineer") {
@@ -174,28 +190,28 @@ const addEmployee = () => {
         employee = new Intern(name, id, email, school);
 
         console.log(employee);
+      } else if (role === "Manager") {
+        employee = new Manager(name, id, email, officeNumber);
       }
 
       teamArray.push(employee);
 
       if (confirmAddEmployee) {
-        return addEmployee(Array);
+        return addEmployee(teamArray);
       } else {
-        return Array;
+        return teamArray;
       }
     });
 };
 
-// function to generate HTML page file using file system
+// function to generate HTML page file using file
 const writeFile = (data) => {
   fs.writeFile("./dist/index.html", data, (err) => {
-    // if there is an error
     if (err) {
       console.log(err);
       return;
-      // when the profile has been created
     } else {
-      console.log("Your team profile has been created!");
+      console.log("Your team profile has been successfully created!");
     }
   });
 };
